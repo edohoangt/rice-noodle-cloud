@@ -1,6 +1,8 @@
 package rccloud;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Digits;
@@ -12,7 +14,13 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import lombok.Data;
 
 @Data
-public class RiceNoodleOrder {
+public class RiceNoodleOrder implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	private Long id;
+	
+	private Date placedAt;
 	
 	@NotBlank(message = "Delivery name is required.") // trimmed value cannot be empty
 	private String deliveryName;

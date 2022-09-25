@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    generate-unique-name: false
+    name: ricenoodlecloud
+    username: h2-admin
+    password: passwd
