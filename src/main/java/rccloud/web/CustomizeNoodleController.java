@@ -42,24 +42,7 @@ public class CustomizeNoodleController {
 	}
 	
 	@ModelAttribute
-	public void addIngredientsToModel(Model model) {
-//		List<Ingredient> ingredients = Arrays.asList(
-//			new Ingredient("FULL", "Day du", Type.VEGGIES),
-//			new Ingredient("VEOL", "Chi rau song", Type.VEGGIES),
-//			new Ingredient("SPOL", "Chi gia", Type.VEGGIES),
-//			new Ingredient("BEEF", "Thit bo", Type.MEAT),
-//			new Ingredient("PORK", "Thit heo", Type.MEAT),
-//			new Ingredient("PSFH", "Cha ca", Type.PASTE),
-//			new Ingredient("PSBF", "Cha bo", Type.PASTE),
-//			new Ingredient("PSPK", "Cha heo", Type.PASTE),
-//			new Ingredient("PSCR", "Cha cua", Type.PASTE),
-//			new Ingredient("SLNO", "Khong cay", Type.SPICY_LEVEL),
-//			new Ingredient("SLMD", "Cay vua", Type.SPICY_LEVEL),
-//			new Ingredient("SLEX", "Cay manh", Type.SPICY_LEVEL),
-//			new Ingredient("NTBU", "Soi bun", Type.NOODLE_TYPE),
-//			new Ingredient("NTPH", "Soi pho", Type.NOODLE_TYPE)
-//		);
-		
+	public void addIngredientsToModel(Model model) {	
 		Iterable<Ingredient> ingredients = ingredientRepository.findAll();
 		
 		Type[] types = Ingredient.Type.values();

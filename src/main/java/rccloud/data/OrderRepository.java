@@ -1,9 +1,9 @@
 package rccloud.data;
 
+import org.springframework.data.repository.CrudRepository;
+
 import rccloud.RiceNoodleOrder;
 
-public interface OrderRepository {
-	
-	RiceNoodleOrder save(RiceNoodleOrder order);
-	
+public interface OrderRepository extends CrudRepository<RiceNoodleOrder, Long> {
+		
 }

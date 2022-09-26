@@ -10,18 +10,24 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import lombok.Data;
 
 @Data
+@Table
 public class RiceNoodleOrder implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private Long id;
 	
-	private Date placedAt;
+	private Date placedAt = new Date();
 	
+	@Column("DELIVERY_NAME")
 	@NotBlank(message = "Delivery name is required.") // trimmed value cannot be empty
 	private String deliveryName;
 	
