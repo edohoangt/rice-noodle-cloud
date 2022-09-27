@@ -1,18 +1,16 @@
 package rccloud.security;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+import rccloud.AppUser;
+import rccloud.data.UserRepository;
 
 @Configuration
 public class SecurityConfig {
@@ -23,11 +21,39 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-		List<UserDetails> usersList = new ArrayList<>();
-		usersList.add(new User("user1", encoder.encode("passwd"), Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))));
-		usersList.add(new User("user2", encoder.encode("passwd"), Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))));
-		return new InMemoryUserDetailsManager(usersList);
+	public UserDetailsService userDetailsService(UserRepository userRepository) {
+		return username -> {
+			AppUser user = userRepository.findByUsername(username);
+			if (user != null) return user;
+			
+			throw new UsernameNotFoundException("User '" + username + "' not found!");
+		};
+	}
+	
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+		return httpSecurity
+				.csrf()
+					.disable() // TODO: remove these 2 lines to enable CSRF protection in Production
+				.authorizeRequests()
+					.antMatchers("/create", "/orders/*").hasRole("USER")
+					.antMatchers("/h2-console/**").permitAll()
+					.antMatchers("/", "/**").access("permitAll()")
+				.and()
+					.headers().frameOptions().sameOrigin() // fix h2-console forbidden error
+				.and()
+					.formLogin()
+						.loginPage("/login")
+						.defaultSuccessUrl("/create")
+				.and()
+					.oauth2Login()
+						.loginPage("/login")
+						.defaultSuccessUrl("/create")
+				.and()
+					.logout()
+						.logoutSuccessUrl("/")
+				.and()
+					.build();
 	}
 	
 }

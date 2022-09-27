@@ -69,6 +69,7 @@ public class CustomizeNoodleController {
 	
 	@PostMapping
 	public String processRiceNoodle(@ModelAttribute RiceNoodleOrder riceNoodleOrder, @Valid RiceNoodle riceNoodle, Errors errors) {
+		log.info("Create noodle form submitted");
 		if (errors.hasErrors()) {
 			return "create";
 		}

@@ -4,3 +4,16 @@ spring:
     name: ricenoodlecloud
     username: h2-admin
     password: passwd
+  h2:
+    console:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: ${FACEBOOK_CLIENT_ID}
+            client-secret: ${FACEBOOK_CLIENT_SECRET}
+            scope:
+            - email
+            - public_profile

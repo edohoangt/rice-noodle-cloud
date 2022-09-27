@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http:/ /www.w3.org/1999/xhtml" xmlns:th="http:/ /www.thymeleaf.org">
+
+<head>
+	<title>Rice Noodle Cloud</title>
+</head>
+
+<body>
+	<h1>Register</h1>
+	<img th:src="@{/images/rncloud-logo.jpg}" />
+
+	<form method="POST" id="registerForm" onsubmit="event.preventDefault(); validatePasswordMatch();"
+		th:object="${form}">
+		<label for="username">Username: </label>
+		<input type="text" name="username" />
+		<br />
+
+		<label for="password">Password: </label>
+		<input type="password" name="password" id="password" />
+		<br />
+
+		<label for="passwordConfirm">Confirm password: </label>
+		<input type="password" name="passwordConfirm" id="passwordConfirm" />
+		<br />
+
+		<label for="fullname">Full name: </label>
+		<input type="text" name="fullname" />
+		<br />
+
+		<label for="street">Street: </label>
+		<input type="text" name="street" />
+		<br />
+
+		<label for="town">Town: </label>
+		<input type="text" name="town" />
+		<br />
+
+		<label for="district">District: </label>
+		<input type="text" name="district" />
+		<br />
+
+		<label for="province">Province: </label>
+		<input type="text" name="province" />
+		<br />
+
+		<label for="phone">Phone: </label>
+		<input type="text" name="phone" />
+		<br />
+
+		<input type="submit" value="Register" />
+	</form>
+	<script type="text/javascript" th:src="@{/js/registration.js}"></script>
+</body>
+
+</html>

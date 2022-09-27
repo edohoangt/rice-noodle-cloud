@@ -1,10 +1,9 @@
-package rccloud.web;
+package rccloud.data;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import rccloud.data.IngredientRepository;
 import rccloud.Ingredient;
 import rccloud.Ingredient.Type;
 
@@ -32,3 +31,4 @@ public class DataConfig {
 	}
 
 }
+
