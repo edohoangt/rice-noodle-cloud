@@ -1,12 +1,9 @@
 spring:
-  datasource:
-    generate-unique-name: false
-    name: ricenoodlecloud
-    username: h2-admin
-    password: passwd
-  h2:
-    console:
-      enabled: true
+  profiles:
+    active: # Remove in production
+    - dev
+  config:
+    import: optional:file:config.env[.properties]
   security:
     oauth2:
       client:
@@ -17,3 +14,52 @@ spring:
             scope:
             - email
             - public_profile
+
+rice-noodle:
+  orders:
+    pageSize: 10
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    generate-unique-name: false
+    name: ricenoodlecloud
+    username: h2-admin
+    password: passwd
+  h2:
+    console:
+      enabled: true
+    
+server:
+  port: 8080
+
+logging:
+  file:
+    path: /f/MY-WORKING-SPACE/10-OCTOBER/workspace-spring-tool-suite-4/logs/
+    name: rn-cloud.log
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://localhost/ricenoodlecloud
+    username: mysql-admin
+    password: passwd
+    driver-class-name: com.mysql.jdbc.Driver
+
+server:
+  port: 8443 
+  ssl:
+    key-store: classpath:rn-cloud.jks
+    key-store-password: ${KEY_STORE_PASSWORD}
+    key-password: ${KEY_PASSWORD}
+    
+logging:
+  file:
+    path: /var/logs/
+    name: rn-cloud.log

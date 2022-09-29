@@ -4,6 +4,12 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### files ###
+*.env
+todo.txt
+rn-cloud.log
+*.jks
+
 ### STS ###
 .apt_generated
 .classpath

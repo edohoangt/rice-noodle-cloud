@@ -1,9 +1,14 @@
 package rccloud.web;
 
+import java.io.Console;
+
 import javax.validation.Valid;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +26,13 @@ import rccloud.data.OrderRepository;
 @SessionAttributes("riceNoodleOrder")
 public class OrderController {
 	
+	private OrderProps props;
+	
 	private OrderRepository orderRepository;
 	
-	public OrderController(OrderRepository orderRepository) {
+	public OrderController(OrderRepository orderRepository, OrderProps props) {
 		this.orderRepository = orderRepository;
+		this.props = props;
 	}
 	
 	@GetMapping("/current")
@@ -46,4 +54,12 @@ public class OrderController {
 		sessionStatus.setComplete();
 		return "redirect:/";
 	}
+	
+	@GetMapping
+	public String ordersForUser(@AuthenticationPrincipal AppUser user, Model model) {
+		Pageable pageable = PageRequest.of(0, props.getPageSize());
+		model.addAttribute("orders", orderRepository.findByAppUserOrderByPlacedAtDesc(user, pageable));
+		return "orderList";
+	}
+	
 }

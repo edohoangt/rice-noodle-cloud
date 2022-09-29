@@ -3,6 +3,7 @@ package rccloud.data;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import rccloud.Ingredient;
 import rccloud.Ingredient.Type;
@@ -11,6 +12,7 @@ import rccloud.Ingredient.Type;
 public class DataConfig {
 	
 	@Bean
+	@Profile("!prod")
 	public CommandLineRunner dataLoader(IngredientRepository repo) {
 		return args -> {
 			repo.save(new Ingredient("FULL", "Day du", Type.VEGGIES));
