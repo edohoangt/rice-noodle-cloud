@@ -17,7 +17,7 @@ spring:
 
 rice-noodle:
   orders:
-    pageSize: 10
+    pageSize: 2
 
 ---
 spring:

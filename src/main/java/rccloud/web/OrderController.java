@@ -1,7 +1,5 @@
 package rccloud.web;
 
-import java.io.Console;
-
 import javax.validation.Valid;
 
 import org.springframework.data.domain.PageRequest;
