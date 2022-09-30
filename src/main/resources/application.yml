@@ -14,7 +14,9 @@ spring:
             scope:
             - email
             - public_profile
-
+  data:
+    rest:
+      base-path: /data-api
 rice-noodle:
   orders:
     pageSize: 2
