@@ -7,7 +7,7 @@ target/
 ### files ###
 *.env
 todo.txt
-rn-cloud.log
+*log*
 *.jks
 
 ### STS ###

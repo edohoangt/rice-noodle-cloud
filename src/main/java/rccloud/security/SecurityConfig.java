@@ -2,6 +2,7 @@ package rccloud.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,8 @@ import rccloud.data.UserRepository;
 
 @Configuration
 public class SecurityConfig {
+	
+	
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -36,11 +39,16 @@ public class SecurityConfig {
 				.csrf()
 					.disable() // TODO: remove these 2 lines to enable CSRF protection in Production
 				.authorizeRequests()
+					.antMatchers(HttpMethod.POST, "/api/ingredients")
+						.hasAuthority("SCOPE_writeIngredients")
+					.antMatchers(HttpMethod.DELETE, "/api/ingredients")
+						.hasAuthority("SCOPE_deleteIngredients")
 					.antMatchers("/create", "/orders/*").hasRole("USER")
 					.antMatchers("/h2-console/**").permitAll()
 					.antMatchers("/", "/**").access("permitAll()")
 				.and()
-					.headers().frameOptions().sameOrigin() // fix h2-console forbidden error
+					.oauth2ResourceServer(oauth2 -> oauth2.jwt())
+				.headers().frameOptions().sameOrigin() // fix h2-console forbidden error					
 				.and()
 					.formLogin()
 						.loginPage("/login")
