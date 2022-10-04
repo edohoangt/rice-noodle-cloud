@@ -12,18 +12,19 @@ import rccloud.RiceNoodleOrder;
 @Component
 @Data
 public class JmsOrderMessagingService implements OrderMessagingService {
-	
+
 	@Autowired
 	private JmsTemplate jmsTemplate;
-	
+
 	@Autowired
 	private Destination orderQueue;
 
 	@Override
 	public void sendOrder(RiceNoodleOrder order) {
-		jmsTemplate.send(orderQueue, session -> session.createObjectMessage(order));
+		jmsTemplate.convertAndSend(orderQueue, order, message -> {
+			message.setStringProperty("X_ORDER_SOURCE", "WEB");
+			return message;
+		});
 	}
-	
-	
-	
+
 }
