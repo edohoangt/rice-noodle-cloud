@@ -16,12 +16,12 @@ import rccloud.data.IngredientRepository;
 
 @RestController
 @RequestMapping(path = "/api/ingredients", produces = "application/json")
-public class IngredientController {
+public class IngredientApiController {
 
 	private IngredientRepository repository;
 	
 	@Autowired
-	public IngredientController(IngredientRepository repository) {
+	public IngredientApiController(IngredientRepository repository) {
 		this.repository = repository;
 	}
 	

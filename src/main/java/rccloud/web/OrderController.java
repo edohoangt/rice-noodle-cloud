@@ -17,6 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import rccloud.AppUser;
 import rccloud.RiceNoodleOrder;
 import rccloud.data.OrderRepository;
+import rccloud.messaging.OrderMessagingService;
 
 //@Slf4j
 @Controller
@@ -28,9 +29,12 @@ public class OrderController {
 	
 	private OrderRepository orderRepository;
 	
-	public OrderController(OrderRepository orderRepository, OrderProps props) {
+	private OrderMessagingService messagingService;
+	
+	public OrderController(OrderRepository orderRepository, OrderProps props, OrderMessagingService messagingService) {
 		this.orderRepository = orderRepository;
 		this.props = props;
+		this.messagingService = messagingService;
 	}
 	
 	@GetMapping("/current")
@@ -48,6 +52,7 @@ public class OrderController {
 		order.setAppUser(user);
 		
 //		log.info("Order submitted: {}", order);
+		messagingService.sendOrder(order);
 		orderRepository.save(order);
 		sessionStatus.setComplete();
 		return "redirect:/";
