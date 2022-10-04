@@ -1,5 +1,7 @@
 package rccloud.messaging;
 
+import javax.jms.Destination;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
@@ -14,10 +16,12 @@ public class JmsOrderMessagingService implements OrderMessagingService {
 	@Autowired
 	private JmsTemplate jmsTemplate;
 	
+	@Autowired
+	private Destination orderQueue;
 
 	@Override
 	public void sendOrder(RiceNoodleOrder order) {
-		jmsTemplate.send(session -> session.createObjectMessage(order));
+		jmsTemplate.send(orderQueue, session -> session.createObjectMessage(order));
 	}
 	
 	

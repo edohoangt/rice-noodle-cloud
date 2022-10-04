@@ -44,7 +44,7 @@ spring:
     
 #  jms:
 #    template:
-#      default-destination: order_queue
+#      default-destination: order_queue # work fine without the need for a specific queue to send
       
 artemis:
   queue: "queue1"
