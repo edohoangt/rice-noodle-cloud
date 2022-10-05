@@ -12,10 +12,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import rccloud.messaging.CustomAuthorityDeserializer;
 
 @Data
 @Entity
@@ -39,6 +42,7 @@ public class AppUser implements UserDetails {
 	private final String phoneNumber;
 	
 	@Override
+	@JsonDeserialize(using = CustomAuthorityDeserializer.class)
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 	}
